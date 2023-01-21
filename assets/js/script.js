@@ -23,7 +23,7 @@ $(function () {
       <div class="row">
         <div class="col hour text-right">${moment().hour(i).format("hA")}</div>
         <textarea class="col time-block ${timeblockTense}"></textarea>
-        <button class="col saveBtn"><i class="fas fa-save"></i></button>
+        <button class="col btn saveBtn"><i class="fas fa-save"></i></button>
       </div>
       `
     );
