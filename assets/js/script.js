@@ -20,9 +20,9 @@ $(function () {
 
     $(".container").append(
       `
-      <div class="row">
+      <div class="row time-block">
         <div class="col hour text-right">${moment().hour(i).format("hA")}</div>
-        <textarea class="col time-block ${timeblockTense}"></textarea>
+        <textarea class="col ${timeblockTense}"></textarea>
         <button class="col btn saveBtn"><i class="fas fa-save"></i></button>
       </div>
       `
