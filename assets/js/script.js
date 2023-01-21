@@ -1,4 +1,16 @@
 $(function () {
+  const getTimeblockTense = (currentHour, timeblockHour) => {
+    let timeblockTense = "past";
+
+    if (timeblockHour > currentHour) {
+      timeblockTense = "future";
+    } else if (timeblockHour === currentHour) {
+      timeblockTense = "present";
+    }
+
+    return timeblockTense;
+  }
+  
   // Handler for .ready() called.
   const $currentDayEl = $("#current-day");
   const currentMoment = moment();
@@ -12,19 +24,8 @@ $(function () {
     timeblockHour <= endHour24;
     timeblockHour++
   ) {
-    // used to test current hour based on an 24 number hour time
-    // const currentHour = Number(moment("13", "H").format("H"));
-    // or
-    // const currentHour = Number(moment().hour(13).format("H"));
-    const currentHour = currentMoment.hour();
-    let timeblockTense = "past";
-
-    if (timeblockHour > currentHour) {
-      timeblockTense = "future";
-    } else if (timeblockHour === currentHour) {
-      timeblockTense = "present";
-    }
-
+    
+    const timeblockTense = getTimeblockTense(currentMoment.hour(), timeblockHour);
     $(".container").append(
       `
       <div class="row time-block">
