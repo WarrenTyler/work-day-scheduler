@@ -18,18 +18,18 @@ $(function () {
     );
     $(".container").append(
       `
-        <div class="row time-block">
-        <div class="col-2 hour text-right p-3">${moment()
-          .hour(timeblockHour)
-          .format("hA")}</div>
-          <textarea class="col-8 ${timeblockTense}"></textarea>
-          <button class="col-2 btn saveBtn"><i class="fas fa-save"></i></button>
-          </div>
-          `
+      <div class="row time-block">
+        <div class="col-2 hour text-right p-3">
+          ${moment().hour(timeblockHour).format("hA")}
+        </div>
+        <textarea class="col-8 ${timeblockTense}"></textarea>
+        <button class="col-2 btn saveBtn"><i class="fas fa-save"></i></button>
+      </div>
+      `
     );
   }
 
-  // UTILITY FUNCTIONS ----------------------------------- //
+  // FUNCTIONS ----------------------------------------- //
 
   function getTimeblockTense(currentHour, timeblockHour) {
     let timeblockTense = "past";
