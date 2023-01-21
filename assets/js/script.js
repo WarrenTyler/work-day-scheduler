@@ -1,6 +1,7 @@
 $(function () {
   // Handler for .ready() called.
   const $currentDayEl = $("#current-day");
+  const $timeblockEl = $("#timeblock");
   const currentMoment = moment();
 
   $currentDayEl.text(currentMoment.format("dddd, MMMM Do"));
@@ -16,7 +17,7 @@ $(function () {
       currentMoment.hour(),
       timeblockHour
     );
-    $(".container").append(
+    $timeblockEl.append(
       `
       <div class="row time-block">
         <div class="col-2 hour text-right p-3">
