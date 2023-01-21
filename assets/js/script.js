@@ -1,16 +1,4 @@
 $(function () {
-  const getTimeblockTense = (currentHour, timeblockHour) => {
-    let timeblockTense = "past";
-
-    if (timeblockHour > currentHour) {
-      timeblockTense = "future";
-    } else if (timeblockHour === currentHour) {
-      timeblockTense = "present";
-    }
-
-    return timeblockTense;
-  }
-  
   // Handler for .ready() called.
   const $currentDayEl = $("#current-day");
   const currentMoment = moment();
@@ -24,18 +12,34 @@ $(function () {
     timeblockHour <= endHour24;
     timeblockHour++
   ) {
-    
-    const timeblockTense = getTimeblockTense(currentMoment.hour(), timeblockHour);
+    const timeblockTense = getTimeblockTense(
+      currentMoment.hour(),
+      timeblockHour
+    );
     $(".container").append(
       `
-      <div class="row time-block">
+        <div class="row time-block">
         <div class="col-2 hour text-right p-3">${moment()
           .hour(timeblockHour)
           .format("hA")}</div>
-        <textarea class="col-8 ${timeblockTense}"></textarea>
-        <button class="col-2 btn saveBtn"><i class="fas fa-save"></i></button>
-      </div>
-      `
+          <textarea class="col-8 ${timeblockTense}"></textarea>
+          <button class="col-2 btn saveBtn"><i class="fas fa-save"></i></button>
+          </div>
+          `
     );
+  }
+
+  // UTILITY FUNCTIONS ----------------------------------- //
+
+  function getTimeblockTense(currentHour, timeblockHour) {
+    let timeblockTense = "past";
+
+    if (timeblockHour > currentHour) {
+      timeblockTense = "future";
+    } else if (timeblockHour === currentHour) {
+      timeblockTense = "present";
+    }
+
+    return timeblockTense;
   }
 });
