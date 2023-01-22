@@ -6,29 +6,8 @@ $(function () {
 
   $currentDayEl.text(currentMoment.format("dddd, MMMM Do"));
 
-  const startHour24 = 9;
-  const endHour24 = 17;
-  for (
-    let timeblockHour = startHour24;
-    timeblockHour <= endHour24;
-    timeblockHour++
-  ) {
-    const timeblockTense = getTimeblockTense(
-      currentMoment.hour(),
-      timeblockHour
-    );
-    $timeblockEl.append(
-      `
-      <div class="row time-block">
-        <div class="col-2 hour text-right p-3">
-          ${moment().hour(timeblockHour).format("hA")}
-        </div>
-        <textarea class="col-8 ${timeblockTense}"></textarea>
-        <button class="col-2 btn saveBtn"><i class="fas fa-save"></i></button>
-      </div>
-      `
-    );
-  }
+  createTimeblockRows(9, 17);
+  
 
   // FUNCTIONS ----------------------------------------- //
 
@@ -42,5 +21,30 @@ $(function () {
     }
 
     return timeblockTense;
+  }
+
+  function createTimeblockRows(from24Hour, to24Hour) {
+    for (
+      let timeblockHour = from24Hour;
+      timeblockHour <= to24Hour;
+      timeblockHour++
+    ) {
+      const timeblockTense = getTimeblockTense(
+        currentMoment.hour(),
+        timeblockHour
+      );
+
+      $timeblockEl.append(
+        `
+        <div class="row time-block">
+          <div class="col-2 hour text-right p-3">
+            ${moment().hour(timeblockHour).format("hA")}
+          </div>
+          <textarea class="col-8 ${timeblockTense}"></textarea>
+          <button class="col-2 btn saveBtn"><i class="fas fa-save"></i></button>
+        </div>
+        `
+      );
+    }
   }
 });
