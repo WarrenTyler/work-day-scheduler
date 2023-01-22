@@ -35,16 +35,23 @@ $(function () {
 
       $timeblockEl.append(
         `
-        <div class="row time-block">
+        <div class="row time-block" data-hour="${timeblockHour}">
           <div class="col-2 hour text-right p-3">${moment()
             .hour(timeblockHour)
             .format("hA")}
           </div>
           <textarea class="col-8 ${timeblockTense}"></textarea>
-          <button class="col-2 btn saveBtn"><i class="fas fa-save"></i></button>
+          <button class="col-2 btn save-btn"><i class="fas fa-save"></i></button>
         </div>
         `
       );
     }
   }
+
+  // EVENTS ----------------------------------- //
+
+  $timeblockEl.on("click", ".save-btn", function () {
+    // console.log(this.parentNode.dataset.hour)
+    console.log($(this).parent().data("hour"));
+  });
 });
