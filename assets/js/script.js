@@ -52,6 +52,20 @@ $(function () {
 
   $timeblockEl.on("click", ".save-btn", function () {
     // console.log(this.parentNode.dataset.hour)
-    console.log($(this).parent().data("hour"));
+    // console.log($(this).parent().data("hour"));
+
+    const $timeblockRowEl = $(this).parent();
+    // const $timeblockTextEl = $timeblockRowEl.find("textarea");
+    // console.log($(this).parent().find("[data-task-entry]").val())
+    // console.log($(this).parent().find("textarea").val());
+
+    const tasks = {};
+    const taskDate = moment().format("DD-MM-YYYY");
+
+    const taskText = $(this).parent().find("textarea").val();
+    const taskTime = $timeblockRowEl.data("hour");
+    const task = { taskTime, taskText };
+    tasks[taskDate] = [task];
+    console.log(tasks);
   });
 });
