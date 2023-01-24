@@ -58,14 +58,21 @@ $(function () {
     // const $timeblockTextEl = $timeblockRowEl.find("textarea");
     // console.log($(this).parent().find("[data-task-entry]").val())
     // console.log($(this).parent().find("textarea").val());
-
-    const tasks = {};
+    // const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+    const tasks = JSON.parse(localStorage.getItem("storedTasks")) || {};
     const taskDate = moment().format("DD-MM-YYYY");
-
     const taskText = $(this).parent().find("textarea").val();
     const taskTime = $timeblockRowEl.data("hour");
     const task = { taskTime, taskText };
-    tasks[taskDate] = [task];
+
+    let tasksForDate = tasks[taskDate] || [];
+
+    tasksForDate = tasksForDate.filter((task) => task.taskTime != taskTime);
+
+    tasksForDate.push(task);
+    tasks[taskDate] = tasksForDate;
     console.log(tasks);
+
+    localStorage.setItem("storedTasks", JSON.stringify(tasks));
   });
 });
