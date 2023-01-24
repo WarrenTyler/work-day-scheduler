@@ -8,6 +8,8 @@ $(function () {
 
   createTimeblockRows(9, 17);
 
+  populateSavedTasked();
+
   // FUNCTIONS ----------------------------------------- //
 
   function getTimeblockTense(currentHour, timeblockHour) {
@@ -46,6 +48,17 @@ $(function () {
         `
       );
     }
+  }
+
+  function populateSavedTasked() {
+    const savedTasks = JSON.parse(localStorage.getItem("storedTasks")) || {};
+    const forDate = moment().format("DD-MM-YYYY");
+
+    let tasksForDate = savedTasks[forDate] || [];
+    tasksForDate.forEach((task) => {
+      const textTarget = $(`[data-hour=${task.taskTime}]`).find("textarea");
+      textTarget.val(task.taskText);
+    });
   }
 
   // EVENTS ----------------------------------- //
