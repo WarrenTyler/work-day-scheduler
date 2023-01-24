@@ -1,5 +1,4 @@
 $(function () {
-  // Handler for .ready() called.
   const $currentDayEl = $("#current-day");
   const $timeblockEl = $("#timeblock");
   const currentMoment = moment();
@@ -8,7 +7,7 @@ $(function () {
 
   createTimeblockRows(9, 17);
 
-  populateSavedTasked();
+  populateSavedTasked(currentMoment);
 
   // FUNCTIONS ----------------------------------------- //
 
@@ -24,6 +23,7 @@ $(function () {
     return timeblockTense;
   }
 
+  // create and append timeblock rows to page using ints to represent 24 hour time
   function createTimeblockRows(from24Hour, to24Hour) {
     for (
       let timeblockHour = from24Hour;
@@ -50,9 +50,11 @@ $(function () {
     }
   }
 
-  function populateSavedTasked() {
+  // this function will populate the textarea's with any tasks that are in
+  // local storage for a particular date
+  function populateSavedTasked(currentMoment) {
     const savedTasks = JSON.parse(localStorage.getItem("storedTasks")) || {};
-    const forDate = moment().format("DD-MM-YYYY");
+    const forDate = currentMoment.format("DD-MM-YYYY");
 
     let tasksForDate = savedTasks[forDate] || [];
     tasksForDate.forEach((task) => {
@@ -64,35 +66,30 @@ $(function () {
   // EVENTS ----------------------------------- //
 
   $timeblockEl.on("click", ".save-btn", function () {
-    // console.log(this.parentNode.dataset.hour)
-    // console.log($(this).parent().data("hour"));
-
+    // get the button that was clicked parent
     const $timeblockRowEl = $(this).parent();
-    // const $timeblockTextEl = $timeblockRowEl.find("textarea");
-    // console.log($(this).parent().find("[data-task-entry]").val())
-    // console.log($(this).parent().find("textarea").val());
-    // const highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+
     const tasks = JSON.parse(localStorage.getItem("storedTasks")) || {};
+    // taskDate will be used as a key for the storage data structure
     const taskDate = moment().format("DD-MM-YYYY");
+
+    // create a new task object based on the text for the task at a particular hour
     const taskText = $(this).parent().find("textarea").val();
     const taskTime = $timeblockRowEl.data("hour");
     const task = { taskTime, taskText };
 
     let tasksForDate = tasks[taskDate] || [];
-
+    // remove any task set for this particular time
     tasksForDate = tasksForDate.filter((task) => task.taskTime != taskTime);
-
     // only add task if there is some text
     if (taskText) {
       tasksForDate.push(task);
     }
     tasks[taskDate] = tasksForDate;
     // remove the date key if there are no task entries
-    if(tasksForDate.length === 0) {
+    if (tasksForDate.length === 0) {
       delete tasks[taskDate];
     }
-
-    console.log(tasks);
 
     localStorage.setItem("storedTasks", JSON.stringify(tasks));
   });
