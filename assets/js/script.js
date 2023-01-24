@@ -82,8 +82,16 @@ $(function () {
 
     tasksForDate = tasksForDate.filter((task) => task.taskTime != taskTime);
 
-    tasksForDate.push(task);
+    // only add task if there is some text
+    if (taskText) {
+      tasksForDate.push(task);
+    }
     tasks[taskDate] = tasksForDate;
+    // remove the date key if there are no task entries
+    if(tasksForDate.length === 0) {
+      delete tasks[taskDate];
+    }
+
     console.log(tasks);
 
     localStorage.setItem("storedTasks", JSON.stringify(tasks));
